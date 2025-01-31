@@ -43,7 +43,7 @@ if __name__ == '__main__':
     
     # Q2b:
     # Vary the number of steps if you like to validate your code
-    run_bandits(environment, 1000)
+    run_bandits(environment, 100000)
 
 
         

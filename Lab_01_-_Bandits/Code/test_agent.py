@@ -38,9 +38,19 @@ if __name__ == '__main__':
         
     # Q3b:
     # Plot the actions and rewards
+    plt.figure(1)
+    plt.plot(action_history, 'r')
+    plt.xlabel('Step')
+    plt.ylabel('Action')
+    plt.title('Actions over Time')
+
+    plt.figure(2)
+    plt.plot(reward_history, 'b')
+    plt.xlabel('Step')
+    plt.ylabel('Reward')
+    plt.title('Rewards over Time')
 
     plt.figure(1)
-
     plt.figure(2)
     
     plt.ion()

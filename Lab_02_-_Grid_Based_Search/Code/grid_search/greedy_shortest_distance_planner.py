@@ -1,4 +1,5 @@
 from random import random
+import math
 from queue import PriorityQueue
 
 from .planner_base import PlannerBase
@@ -21,8 +22,12 @@ class GreedyShortestDistancePlanner(PlannerBase):
         # priority. Values with larger priority are pulled off the queue
         # first
         
+        x,y = cell.coords()
+        dx, dy = self.goal.coords()
+        
         # Assign random priority
-        priority: float = random()
+        #priority: float = 10**6 - math.sqrt((x-dx)**2 + (y-dy)**2)
+        priority: float = math.sqrt((x-dx)**2 + (y-dy)**2)
         self._priority_queue.put((priority, cell))
 
     # Check the queue size is zero

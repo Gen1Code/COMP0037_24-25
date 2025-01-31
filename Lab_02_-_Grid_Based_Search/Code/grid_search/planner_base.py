@@ -102,13 +102,14 @@ class PlannerBase(object):
         # create a spiral.
 
         # The swapped order video transposed the last four transitions first
+
+        self.push_back_candidate_cell_if_valid(cell, cells, -1, 0)
+        self.push_back_candidate_cell_if_valid(cell, cells, 0, 1)
+        self.push_back_candidate_cell_if_valid(cell, cells, 1, 0)
         self.push_back_candidate_cell_if_valid(cell, cells, 0, -1)
         self.push_back_candidate_cell_if_valid(cell, cells, 1, -1)
-        self.push_back_candidate_cell_if_valid(cell, cells, 1, 0)
         self.push_back_candidate_cell_if_valid(cell, cells, 1, 1)
-        self.push_back_candidate_cell_if_valid(cell, cells, 0, 1)
         self.push_back_candidate_cell_if_valid(cell, cells, -1, 1)
-        self.push_back_candidate_cell_if_valid(cell, cells, -1, 0)
         self.push_back_candidate_cell_if_valid(cell, cells, -1, -1)
 
         return cells
@@ -257,10 +258,15 @@ class PlannerBase(object):
 
         # Start at the goal and find the parent
         cell = path_end_cell.parent
-
+        
         # Q2a:
         # Add code to populate path.waypoints with all the cells on the path from the
         # goal to the start.
+        while cell.parent:
+            path.waypoints.append(cell)
+            cell = cell.parent
+            
+        path.waypoints.append(cell)
 
         # Now mark the cells as being on the path and show them. We do
         # this as a separate step to show going from the start to the goal
@@ -282,9 +288,17 @@ class PlannerBase(object):
         # Q2b:
         # For the path, work out the length of the path and write the value
         # into path.path_travel_cost
-
         path_cost: float = 0
+
+        for i in range(len(path.waypoints) - 1):
+            current_cell = path.waypoints[i]
+            next_cell = path.waypoints[i+1]
+            path_cost += self._occupancy_grid.compute_transition_cost(current_cell.coords(), next_cell.coords())
+            
         path.path_travel_cost = path_cost
+        
+        print(path_cost)
+        print(len(path.waypoints)-1)
 
         # Return the path
         return path

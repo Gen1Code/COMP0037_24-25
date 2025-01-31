@@ -12,6 +12,7 @@ import numpy as np
 from bandits.bandit import Bandit
 from bandits.bandit import BanditEnvironment
 from bandits.epsilon_greedy_agent import EpsilonGreedyAgent
+from bandits.damped_epsilon_greedy_agent import DampedEpsilonGreedyAgent
 from bandits.performance_measures import compute_percentage_of_optimal_actions_selected
 from bandits.performance_measures import compute_regret
 
@@ -36,9 +37,9 @@ if __name__ == '__main__':
     
     # Q5b:
     # Change values to see what happens
-    epsilon = 0.01
+    epsilon = 0.05
     
-    agent = EpsilonGreedyAgent(environment, epsilon)
+    agent = DampedEpsilonGreedyAgent(environment, epsilon)
     
     # Step-by-step store of rewards
     reward_history = np.zeros(number_of_steps)

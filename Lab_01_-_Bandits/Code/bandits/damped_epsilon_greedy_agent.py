@@ -27,7 +27,6 @@ class DampedEpsilonGreedyAgent(Agent):
     # Q5.c:
     # Explore with different values for this function and see what happens.
     def _compute_epsilon(self):
-        
         return self._epsilon * math.exp(-0.05 * self.total_number_of_pulls)
             
         

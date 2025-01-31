@@ -34,12 +34,17 @@ def compute_percentage_of_optimal_actions_selected(environment, action_history):
 def compute_regret(environment, reward_history):
     
     # Work out the optimal action
-    optimal_action, optimal_reward = 0, 0
+    optimal_action, optimal_reward = environment.optimal_action()
     
     num_actions_taken = len(reward_history)
     
     # Work out the cumulative reward
     cumulative_reward = np.zeros(num_actions_taken)
+    for a in range(0, num_actions_taken):
+        if a == 0:
+            cumulative_reward[a] = reward_history[a]
+        else:
+            cumulative_reward[a] = cumulative_reward[a-1] + reward_history[a]
     
     regret = optimal_reward * np.arange(1, num_actions_taken + 1) - cumulative_reward
     return regret

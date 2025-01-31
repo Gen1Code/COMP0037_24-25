@@ -7,9 +7,20 @@ from grid_search.breadth_first_planner import BreadthFirstPlanner
 # Q1c:
 # Modify the occupancy grid size
 occupancy_grid = OccupancyGrid(
-    "Breadth First Search in Empty Space", 10, 10, 0.5)
+    "Breadth First Search in Empty Space", 30, 30, 0.5)
 
 # Q1d:
+
+occupancy_grid.set_cell(10,1,1)
+occupancy_grid.set_cell(10,1,1)
+occupancy_grid.set_cell(10,1,1)
+occupancy_grid.set_cell(10,1,1)
+occupancy_grid.set_cell(10,1,1)
+occupancy_grid.set_cell(10,1,1)
+occupancy_grid.set_cell(10,1,1)
+occupancy_grid.set_cell(10,2,1)
+occupancy_grid.set_cell(9,1,1)
+occupancy_grid.set_cell(8,1,1)
 
 # Add obstacles to the occupancy grid. The last term is the probability
 # that a cell is occupied. In this module, we really only deal with the cases
@@ -32,8 +43,8 @@ planner.update_graphics_each_iteration(True)
 
 # Q1b:
 # Set the start and end values to the specified
-start = (0, 0)
-goal = (9, 4)
+start = (1, 7)
+goal = (8, 4)
 
 # Run the planner to work out the path from the start to the goal
 planner.plan(start, goal)

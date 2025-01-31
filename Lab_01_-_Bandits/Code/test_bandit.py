@@ -15,7 +15,7 @@ if __name__ == '__main__':
     
     # Q1b:
     # Vary the number of times the agent gets fired to see what you find out
-    number_of_steps = 1000
+    number_of_steps = 10000
 
     # Array to store the reward
     rewards = np.zeros(number_of_steps)
@@ -26,9 +26,9 @@ if __name__ == '__main__':
     # of times. We use this iterative one sample-at-a-time approach
     # because this is used later for the different learning frameworks
     # we will encounter.
-    bandit = None
+    bandit = Bandit(1,2)
     for s in range(0, number_of_steps):
-        rewards[s] = 0
+        rewards[s] = bandit.pull_arm()
 
     # Generate the plots below. Please note that we use labels, titles and
     # captions. We expect you to do this in any material you submit,
@@ -59,6 +59,8 @@ if __name__ == '__main__':
     # and computing the mean at the end. We use the recursive form
     # because other algorithms later rely upon it.
     recursive_q = rewards[0]
+    for r in range(len(rewards)):
+        recursive_q = recursive_q + (rewards[r]-recursive_q)/(r+1)
 
     print(f'recursive_q={recursive_q}')
 

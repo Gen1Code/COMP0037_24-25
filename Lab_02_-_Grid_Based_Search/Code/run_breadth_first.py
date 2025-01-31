@@ -11,6 +11,8 @@ occupancy_grid = OccupancyGrid("Breadth-First Example", 21, 21, 0.5)
 for y in range(0, 20):
     occupancy_grid.set_cell(11, y, 1)
 
+occupancy_grid.set_cell(11, 10, 0)
+
 start = (0, 20)
 goal = (20, 0)
 

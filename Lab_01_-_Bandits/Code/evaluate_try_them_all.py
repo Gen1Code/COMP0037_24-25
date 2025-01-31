@@ -34,7 +34,8 @@ if __name__ == '__main__':
     
     number_of_steps = 10000
     
-    number_of_tries = 50
+    number_of_tries = 10000*0.006
+
     
     agent = TryThemAllAgent(environment, number_of_tries)
     
@@ -51,7 +52,29 @@ if __name__ == '__main__':
     # Q4a:
     # Plot the % optimal actions
     percentage_correct_actions = compute_percentage_of_optimal_actions_selected(environment, action_history)
+    plt.figure(1)
+    plt.plot(percentage_correct_actions, 'b')
+    plt.xlabel('Step')
+    plt.ylabel('Reward')
+    plt.title('% Correct over Time')
     
     # Q4c:
     # Plot the regret curves
     regret = compute_regret(environment, reward_history)
+    
+    plt.figure(2)
+    plt.plot(regret, 'b')
+    plt.xlabel('Step')
+    plt.ylabel('Regret')
+    plt.title('Regret over Time')
+    
+    
+    plt.figure(1)
+    plt.figure(2)
+    
+    plt.ion()
+    plt.show()
+    plt.pause(0.001)
+    print('Press enter to exit')
+    input()
+

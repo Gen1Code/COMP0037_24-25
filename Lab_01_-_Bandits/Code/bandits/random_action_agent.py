@@ -5,6 +5,7 @@ Created on 14 Jan 2022
 '''
 
 from .agent import Agent
+import random
 
 # This agent randomly picks action. It subclasses from Agent, and
 # inherits all the base class book keeping.
@@ -22,6 +23,6 @@ class RandomActionAgent(Agent):
     # Q3a:
     # Choose a random action the agent will perform
     def _choose_action(self):
-        return 0
+        return random.randint(0, self._environment.number_of_bandits()-1)
 
         

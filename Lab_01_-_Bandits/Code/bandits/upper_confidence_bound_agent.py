@@ -19,5 +19,16 @@ class UpperConfidenceBoundAgent(Agent):
     # Q6a:
     # Implement UCB
     def _choose_action(self):
-        action = 0
-        return action
+                
+        average_q = np.divide(self.total_reward, self.number_of_pulls)
+        
+        best_action = 0
+        best_score = -99
+        
+        for a in range(self._number_of_bandits):
+            score = average_q[a] + self._c * math.sqrt(math.log(self.total_number_of_pulls)/self.number_of_pulls[a])
+            if best_score < score:
+                best_score = score
+                best_action = a
+
+        return best_action
