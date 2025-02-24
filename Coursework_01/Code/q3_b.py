@@ -5,7 +5,6 @@ Created on 3 Feb 2022
 
 @author: ucacsjj
 '''
-
 from common.scenarios import full_scenario
 from generalized_policy_iteration.policy_iterator import PolicyIterator
 from generalized_policy_iteration.value_function_drawer import \
@@ -29,6 +28,8 @@ if __name__ == '__main__':
 
     # Set up initial state
     policy_solver.initialize()
+    
+    policy_solver.set_gamma(0.9)
     
     # We only do 10 policy evaluation steps per iteration
     policy_solver.set_max_policy_evaluation_steps_per_iteration(10)

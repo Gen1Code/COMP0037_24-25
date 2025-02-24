@@ -103,7 +103,7 @@ class LowLevelEnvironment(Env):
         
         # Debugging
         if print_cell:
-            print(f'action={str(DrivingActionType(a))}')
+            print(f'action={str(LowLevelActionType(a))}')
         
         # First handle the easy cases
         
@@ -191,5 +191,3 @@ class LowLevelEnvironment(Env):
             p.append(pr)
             
         return s_prime, r, p
-        
- 

@@ -154,10 +154,37 @@ class PolicyIterator(DynamicProgrammingBase):
         # Get the environment and map
         environment = self._environment
         map = environment.map()
-
         policy_stable = True
+        
+        for x in range(map.width()):
+            for y in range(map.height()):
+                if map.cell(x, y).is_obstruction() or map.cell(x, y).is_terminal():
+                    continue
+                
+                old_action = self._pi.action(x, y)
+                
+                best_action = None
+                best_val = float("-inf")
+                
+                #Argmax_a
+                for a in range(environment.action_space.n):
+                    s_prime, r, p = environment.next_state_and_reward_distribution((x, y), a)
+                    new_val = 0
+                    
+                    #Summation over s',r  (possible states)
+                    for i in range(len(p)):
+                        s_x, s_y = s_prime[i].coords()
+                        new_val += p[i]*(r[i] + self._gamma*self._v.value(s_x, s_y))
+                        
+                    if new_val > best_val:
+                        best_action = a
+                        best_val = new_val
+                
+                self._pi.set_action(x, y, best_action)
+                
+                if best_action != old_action:
+                    policy_stable = False
 
-        # Return true if the policy is stable (=isn't changing)     
         return policy_stable
                     
                 
