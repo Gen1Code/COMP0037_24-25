@@ -20,6 +20,8 @@ from p1.low_level_environment import LowLevelEnvironment
 from p1.low_level_actions import LowLevelActionType
 from p1.low_level_policy_drawer import LowLevelPolicyDrawer
 
+import numpy as np
+
 if __name__ == '__main__':
     airport_map, drawer_height = test_three_row_scenario()
     env = LowLevelEnvironment(airport_map)
@@ -43,9 +45,10 @@ if __name__ == '__main__':
     
     # Off policy MC predictors
     
-    epsilon_b_values = [0.1, 0.2, 0.5, 1.0]
+    epsilon_b_values = [0, 0.1, 0.2, 0.5, 1]
     
     num_values = len(epsilon_b_values)
+    convergence = []
     
     mc_predictors = [None] * num_values
     mc_drawers = [None] * num_values
@@ -64,6 +67,22 @@ if __name__ == '__main__':
         for i in range(num_values):
             mc_predictors[i].evaluate()
             mc_drawers[i].update()
+            if e == 0:
+                convergence.append([])
+            
+            current_values = [mc_predictors[i].value_function().value(x,y) for x in range(15) for y in range(3)]
+            convergence[i].append(np.array(current_values))
+
+    for i, eps in enumerate(epsilon_b_values):
+        changes = []
+        for e in range(1, 100):
+            diff = convergence[i][e] - convergence[i][e-1]
+            rms_change = np.sqrt(np.mean(diff**2))
+            changes.append(rms_change)
+    
+        print(f"ϵb = {eps:.1f}:")
+        print(f"Final RMS change: {changes[-1]:.6f}")
+        print(f"Number of iterations until RMS < 0.001: {np.argmax(np.array(changes) < 0.001) if any(np.array(changes) < 0.001) else '>100'}\n")
        
     v_pe.save_screenshot("q1_c_truth_pe.pdf")
     for i in range(num_values):
